@@ -5,15 +5,17 @@
   <title>WebGIS KKPRL Jawa Tengah</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Leaflet CSS -->
+  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <!-- Leaflet Search CSS -->
+  <!-- Search -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet-search@3.0.4/dist/leaflet-search.min.css"/>
+  <script src="https://unpkg.com/leaflet-search@3.0.4/dist/leaflet-search.min.js"></script>
 
   <style>
-    body { margin: 0; padding: 0; }
-    #map { width: 100%; height: 100vh; }
+    body { margin: 0; }
+    #map { height: 100vh; }
 
     .popup-table {
       border-collapse: collapse;
@@ -27,19 +29,12 @@
     .popup-table td:first-child {
       font-weight: bold;
       background: #f2f2f2;
-      width: 35%;
     }
   </style>
 </head>
 
 <body>
 <div id="map"></div>
-
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- Leaflet Search -->
-<script src="https://unpkg.com/leaflet-search@3.0.4/dist/leaflet-search.min.js"></script>
 
 <script>
 // ===============================
@@ -90,13 +85,13 @@ function kkprlStyle(feature) {
 }
 
 // ===============================
-// STYLE AKRESI (BEDAIN BIAR JELAS)
+// STYLE AKRESI
 // ===============================
 function akresiStyle() {
   return {
-    color: "#000000",
+    color: "black",
     weight: 1,
-    fillColor: "#ffff00",
+    fillColor: "yellow",
     fillOpacity: 0.5
   };
 }
@@ -106,7 +101,6 @@ function akresiStyle() {
 // ===============================
 function onEachFeature(feature, layer) {
   const p = feature.properties;
-
   let content = `<table class="popup-table">`;
 
   for (let key in p) {
@@ -118,13 +112,22 @@ function onEachFeature(feature, layer) {
 }
 
 // ===============================
-// LOAD DATA (IMPORTANT FIX HERE)
+// 🔥 RAW URL (FIX UTAMA)
+// ===============================
+const kkprlUrl = "https://raw.githubusercontent.com/maghfirohnovia5-web/KKPRL_Existing/main/data/kkprl_jawa.geojson";
+const akresiUrl = "https://raw.githubusercontent.com/maghfirohnovia5-web/KKPRL_Existing/main/data/Akresi_Joined_Fix.geojson";
+
+// ===============================
+// LOAD DATA
 // ===============================
 Promise.all([
-  fetch("data/kkprl_jawa.geojson").then(res => res.json()),
-  fetch("data/Akresi_Joined_Fix.json").then(res => res.json()) // <-- FIXED HERE
+  fetch(kkprlUrl).then(res => res.json()),
+  fetch(akresiUrl).then(res => res.json())
 ])
 .then(([kkprlData, akresiData]) => {
+
+  console.log("KKPRL features:", kkprlData.features.length);
+  console.log("AKRESI features:", akresiData.features.length);
 
   // KKPRL
   const kkprlLayer = L.geoJSON(kkprlData, {
@@ -143,7 +146,7 @@ Promise.all([
   map.fitBounds(group.getBounds());
 
   // ===============================
-  // SEARCH (KKPRL ONLY)
+  // SEARCH
   // ===============================
   const searchControl = new L.Control.Search({
     layer: kkprlLayer,
@@ -153,9 +156,7 @@ Promise.all([
   });
 
   searchControl.on("search:locationfound", function(e) {
-    if (e.layer._popup) {
-      e.layer.openPopup();
-    }
+    if (e.layer._popup) e.layer.openPopup();
   });
 
   map.addControl(searchControl);
@@ -179,10 +180,10 @@ Promise.all([
 
 })
 .catch(err => {
-  console.error(err);
-  alert("Gagal load GeoJSON. Cek path & format file.");
+  console.error("ERROR:", err);
+  alert("Data gagal dimuat. Cek console.");
 });
-
 </script>
+
 </body>
 </html>
