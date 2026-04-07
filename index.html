@@ -56,29 +56,24 @@ const osm = L.tileLayer(
 );
 
 // ===============================
-// COLOR KKPRL
+// STYLE KKPRL
 // ===============================
-const colorPalette = [
-  "#e41a1c","#984ea3","#ff7f00",
-  "#a65628","#f781bf","#999999",
-  "#d95f02","#7570b3"
-];
-
-const subjectColorMap = {};
+const colors = ["#e41a1c","#984ea3","#ff7f00","#a65628","#f781bf","#999999","#d95f02","#7570b3"];
 let colorIndex = 0;
+const colorMap = {};
 
-function getColorBySubject(subject) {
-  if (!subjectColorMap[subject]) {
-    subjectColorMap[subject] = colorPalette[colorIndex % colorPalette.length];
+function getColor(subject) {
+  if (!colorMap[subject]) {
+    colorMap[subject] = colors[colorIndex % colors.length];
     colorIndex++;
   }
-  return subjectColorMap[subject];
+  return colorMap[subject];
 }
 
 function kkprlStyle(feature) {
-  const subject = feature.properties.NAMA_SUBJ || "Tidak Diketahui";
+  const subject = feature.properties.NAMA_SUBJ || "Unknown";
   return {
-    color: getColorBySubject(subject),
+    color: getColor(subject),
     weight: 2,
     fillOpacity: 0.6
   };
@@ -101,21 +96,19 @@ function akresiStyle() {
 // ===============================
 function onEachFeature(feature, layer) {
   const p = feature.properties;
-  let content = `<table class="popup-table">`;
-
+  let html = "<table class='popup-table'>";
   for (let key in p) {
-    content += `<tr><td>${key}</td><td>${p[key]}</td></tr>`;
+    html += `<tr><td>${key}</td><td>${p[key]}</td></tr>`;
   }
-
-  content += `</table>`;
-  layer.bindPopup(content);
+  html += "</table>";
+  layer.bindPopup(html);
 }
 
 // ===============================
-// 🔥 RAW URL (FIX UTAMA)
+// 🔥 FIXED PATH (.geojson)
 // ===============================
-const kkprlUrl = "https://raw.githubusercontent.com/maghfirohnovia5-web/KKPRL_Existing/main/data/kkprl_jawa.geojson";
-const akresiUrl = "https://raw.githubusercontent.com/maghfirohnovia5-web/KKPRL_Existing/main/data/Akresi_Joined_Fix.geojson";
+const kkprlUrl = "data/kkprl_jawa.geojson";
+const akresiUrl = "data/Akresi_Joined_Fix.geojson";
 
 // ===============================
 // LOAD DATA
@@ -126,28 +119,26 @@ Promise.all([
 ])
 .then(([kkprlData, akresiData]) => {
 
-  console.log("KKPRL features:", kkprlData.features.length);
-  console.log("AKRESI features:", akresiData.features.length);
+  console.log("KKPRL:", kkprlData.features.length);
+  console.log("AKRESI:", akresiData.features.length);
 
-  // KKPRL
+  // KKPRL layer
   const kkprlLayer = L.geoJSON(kkprlData, {
     style: kkprlStyle,
     onEachFeature: onEachFeature
   }).addTo(map);
 
-  // AKRESI
+  // Akresi layer
   const akresiLayer = L.geoJSON(akresiData, {
     style: akresiStyle,
     onEachFeature: onEachFeature
   }).addTo(map);
 
-  // FIT BOUNDS
+  // Fit bounds
   const group = L.featureGroup([kkprlLayer, akresiLayer]);
   map.fitBounds(group.getBounds());
 
-  // ===============================
-  // SEARCH
-  // ===============================
+  // Search
   const searchControl = new L.Control.Search({
     layer: kkprlLayer,
     propertyName: "NAMA_SUBJ",
@@ -161,27 +152,23 @@ Promise.all([
 
   map.addControl(searchControl);
 
-  // ===============================
-  // LAYER CONTROL
-  // ===============================
-  const baseMaps = {
-    "Satelit (Esri)": esriSat,
-    "OpenStreetMap": osm
-  };
-
-  const overlayMaps = {
-    "KKPRL Jawa Tengah": kkprlLayer,
-    "Akresi Pantai": akresiLayer
-  };
-
-  L.control.layers(baseMaps, overlayMaps, {
-    collapsed: false
-  }).addTo(map);
+  // Layer control
+  L.control.layers(
+    {
+      "Satelit": esriSat,
+      "OpenStreetMap": osm
+    },
+    {
+      "KKPRL": kkprlLayer,
+      "Akresi": akresiLayer
+    },
+    { collapsed: false }
+  ).addTo(map);
 
 })
 .catch(err => {
   console.error("ERROR:", err);
-  alert("Data gagal dimuat. Cek console.");
+  alert("Gagal load data. Cek path & nama file.");
 });
 </script>
 
