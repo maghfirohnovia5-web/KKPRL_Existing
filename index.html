@@ -16,34 +16,22 @@
 
     /* HEADER */
     #header {
-      background: #0d3b6e;
-      color: white;
-      padding: 0 18px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-shrink: 0;
-      z-index: 1000;
+      background: #0d3b6e; color: white;
+      padding: 0 18px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0; z-index: 1000;
       box-shadow: 0 2px 10px rgba(0,0,0,0.35);
     }
     .logo { display: flex; align-items: center; gap: 12px; }
     .logo-icon {
-      width: 36px; height: 36px;
-      background: #1a6ea8;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
+      width: 36px; height: 36px; background: #1a6ea8;
+      border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px;
     }
-    .logo-text h1 { font-size: 14px; font-weight: 700; letter-spacing: 0.2px; }
+    .logo-text h1 { font-size: 14px; font-weight: 700; }
     .logo-text .sub { font-size: 11px; color: #8ab4d4; margin-top: 1px; }
     .header-badge {
-      background: #1a6ea8;
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-size: 11px;
-      color: #c8dff0;
-      letter-spacing: 0.3px;
+      background: #1a6ea8; border-radius: 20px;
+      padding: 4px 12px; font-size: 11px; color: #c8dff0;
     }
 
     /* LAYOUT */
@@ -51,14 +39,10 @@
 
     /* SIDEBAR */
     #sidebar {
-      width: 290px;
-      background: #f5f7fa;
+      width: 290px; background: #f5f7fa;
       border-right: 1px solid #dce3ec;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      overflow-y: auto;
-      z-index: 500;
+      display: flex; flex-direction: column;
+      flex-shrink: 0; overflow-y: auto; z-index: 500;
     }
     .s-section { padding: 14px 16px; border-bottom: 1px solid #dce3ec; }
     .s-title {
@@ -70,9 +54,8 @@
     /* Stats */
     .stat-row { display: flex; gap: 8px; }
     .stat-card {
-      flex: 1; background: white;
-      border: 1px solid #dce3ec; border-radius: 8px;
-      padding: 10px; text-align: center;
+      flex: 1; background: white; border: 1px solid #dce3ec;
+      border-radius: 8px; padding: 10px; text-align: center;
     }
     .stat-value { font-size: 22px; font-weight: 700; color: #0d3b6e; }
     .stat-label { font-size: 10px; color: #7a93ad; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
@@ -87,61 +70,71 @@
     .basemap-item input[type=radio] { accent-color: #0d3b6e; cursor: pointer; }
     .basemap-name { font-size: 13px; color: #2c3e50; }
 
-    /* Shared master-toggle block */
+    /* Master toggles */
     .master-toggle {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 8px 10px;
-      border-radius: 8px; margin-bottom: 8px;
+      padding: 8px 10px; border-radius: 8px; margin-bottom: 8px;
     }
-    .master-toggle.kkprl-color { background: #e8f0f8; }
+    .master-toggle.kkprl-color  { background: #e8f0f8; }
     .master-toggle.akresi-color { background: #fdf6e3; }
     .master-left { display: flex; align-items: center; gap: 8px; cursor: pointer; flex: 1; }
     .master-toggle input[type=checkbox] { width: 15px; height: 15px; accent-color: #0d3b6e; cursor: pointer; }
     .master-label { font-size: 13px; font-weight: 600; }
-    .master-label.kkprl-color { color: #0d3b6e; }
+    .master-label.kkprl-color  { color: #0d3b6e; }
     .master-label.akresi-color { color: #7a5c00; }
     .expand-btn {
-      background: none; cursor: pointer;
-      font-size: 11px; padding: 3px 8px;
-      border-radius: 6px; transition: background 0.15s; white-space: nowrap;
+      background: none; cursor: pointer; font-size: 11px;
+      padding: 3px 8px; border-radius: 6px; transition: background 0.15s; white-space: nowrap;
     }
-    .expand-btn.kkprl-color { border: 1px solid #b0c8e0; color: #1a6ea8; }
-    .expand-btn.kkprl-color:hover { background: #d0dff0; }
+    .expand-btn.kkprl-color  { border: 1px solid #b0c8e0; color: #1a6ea8; }
+    .expand-btn.kkprl-color:hover  { background: #d0dff0; }
     .expand-btn.akresi-color { border: 1px solid #d4b86a; color: #7a5c00; }
     .expand-btn.akresi-color:hover { background: #f0e0a0; }
 
     /* Sub-lists */
     .sub-list { display: none; padding-left: 2px; }
     .sub-list.open { display: block; }
+
     .sub-item {
-      display: flex; align-items: flex-start; gap: 8px;
-      padding: 6px 8px; border-radius: 6px;
-      cursor: pointer; transition: background 0.15s; margin-bottom: 2px;
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 8px; border-radius: 6px;
+      transition: background 0.15s; margin-bottom: 2px;
     }
     .sub-item:hover { background: #e4eaf2; }
-    .sub-item input[type=checkbox] { width: 14px; height: 14px; accent-color: #0d3b6e; cursor: pointer; flex-shrink: 0; margin-top: 1px; }
-    .sub-swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; margin-top: 2px; }
-    .sub-name { font-size: 11.5px; color: #2c3e50; line-height: 1.4; }
-    .sub-count { color: #aab8c4; font-size: 10px; }
+    .sub-item input[type=checkbox] { width: 14px; height: 14px; accent-color: #0d3b6e; cursor: pointer; flex-shrink: 0; }
+
+    /* Color picker swatch — clicking opens the hidden <input type=color> */
+    .color-swatch-btn {
+      width: 18px; height: 18px; border-radius: 4px;
+      border: 1.5px solid rgba(0,0,0,0.2);
+      cursor: pointer; flex-shrink: 0;
+      position: relative; overflow: hidden;
+      transition: transform 0.1s;
+    }
+    .color-swatch-btn:hover { transform: scale(1.15); border-color: rgba(0,0,0,0.45); }
+    .color-swatch-btn input[type=color] {
+      position: absolute; top: 0; left: 0;
+      width: 200%; height: 200%;
+      opacity: 0; cursor: pointer; border: none; padding: 0;
+    }
+
+    .sub-name { font-size: 11.5px; color: #2c3e50; line-height: 1.4; flex: 1; min-width: 0; }
+    .sub-count { color: #aab8c4; font-size: 10px; white-space: nowrap; }
 
     /* MAP */
     #map { flex: 1; z-index: 1; }
 
     /* LOADING */
     #loading-overlay {
-      position: absolute;
-      top: 56px; left: 290px; right: 0; bottom: 0;
+      position: absolute; top: 56px; left: 290px; right: 0; bottom: 0;
       background: rgba(245,247,250,0.92);
       display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      z-index: 9999; gap: 14px;
+      align-items: center; justify-content: center; z-index: 9999; gap: 14px;
     }
     .spinner {
       width: 40px; height: 40px;
-      border: 3px solid #dce3ec;
-      border-top-color: #0d3b6e;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      border: 3px solid #dce3ec; border-top-color: #0d3b6e;
+      border-radius: 50%; animation: spin 0.8s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     .loading-text { font-size: 13px; color: #7a93ad; }
@@ -164,10 +157,9 @@
     .popup-row { display: flex; border-bottom: 1px solid #f0f4f8; font-size: 12px; }
     .popup-row:last-child { border-bottom: none; }
     .popup-key {
-      background: #f7f9fb; color: #7a93ad;
-      padding: 6px 10px; width: 38%;
-      font-weight: 600; font-size: 10.5px;
-      text-transform: uppercase; letter-spacing: 0.3px; word-break: break-word;
+      background: #f7f9fb; color: #7a93ad; padding: 6px 10px; width: 38%;
+      font-weight: 600; font-size: 10.5px; text-transform: uppercase;
+      letter-spacing: 0.3px; word-break: break-word;
     }
     .popup-val { padding: 6px 10px; color: #2c3e50; width: 62%; word-break: break-word; }
 
@@ -175,11 +167,9 @@
     .sidebar-footer p { font-size: 11px; color: #aab8c4; line-height: 1.7; }
 
     #sidebar-toggle {
-      display: none;
-      position: absolute; top: 66px; left: 10px;
+      display: none; position: absolute; top: 66px; left: 10px;
       z-index: 1000; background: #0d3b6e; color: white;
-      border: none; border-radius: 6px;
-      width: 34px; height: 34px; cursor: pointer; font-size: 16px;
+      border: none; border-radius: 6px; width: 34px; height: 34px; cursor: pointer; font-size: 16px;
     }
     @media (max-width: 700px) {
       #sidebar { display: none; }
@@ -207,7 +197,6 @@
 <div id="main">
   <div id="sidebar">
 
-    <!-- Stats -->
     <div class="s-section">
       <div class="s-title">Statistik Data</div>
       <div class="stat-row">
@@ -222,7 +211,6 @@
       </div>
     </div>
 
-    <!-- KKPRL -->
     <div class="s-section">
       <div class="s-title">Layer KKPRL</div>
       <div class="master-toggle kkprl-color">
@@ -230,12 +218,12 @@
           <input type="checkbox" id="chk-kkprl-all" checked>
           <span class="master-label kkprl-color">Tampilkan Semua KKPRL</span>
         </label>
-        <button class="expand-btn kkprl-color" id="expand-kkprl" onclick="toggleExpand(event,'kkprl-sub-list','expand-kkprl')">▸ Detail</button>
+        <button class="expand-btn kkprl-color" id="expand-kkprl"
+          onclick="toggleExpand(event,'kkprl-sub-list','expand-kkprl')">▸ Detail</button>
       </div>
       <div id="kkprl-sub-list" class="sub-list"></div>
     </div>
 
-    <!-- Akresi -->
     <div class="s-section">
       <div class="s-title">Layer Akresi</div>
       <div class="master-toggle akresi-color">
@@ -243,12 +231,12 @@
           <input type="checkbox" id="chk-akresi-all" checked>
           <span class="master-label akresi-color">Tampilkan Semua Akresi</span>
         </label>
-        <button class="expand-btn akresi-color" id="expand-akresi" onclick="toggleExpand(event,'akresi-sub-list','expand-akresi')">▸ Detail</button>
+        <button class="expand-btn akresi-color" id="expand-akresi"
+          onclick="toggleExpand(event,'akresi-sub-list','expand-akresi')">▸ Detail</button>
       </div>
       <div id="akresi-sub-list" class="sub-list"></div>
     </div>
 
-    <!-- Basemap -->
     <div class="s-section">
       <div class="s-title">Basemap</div>
       <label class="basemap-item">
@@ -264,7 +252,6 @@
     <div class="sidebar-footer">
       <p>Data: LPRL Serang<br>Ditjen PRL – KKP RI<br>© 2025</p>
     </div>
-
   </div>
 
   <div id="map"></div>
@@ -282,12 +269,10 @@ const esriSat = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   { attribution: "© Esri" }
 ).addTo(map);
-
 const osm = L.tileLayer(
   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   { attribution: "© OpenStreetMap" }
 );
-
 document.querySelectorAll('input[name="basemap"]').forEach(r => {
   r.addEventListener("change", () => {
     if (r.value === "satelit") { map.removeLayer(osm); map.addLayer(esriSat); }
@@ -295,44 +280,35 @@ document.querySelectorAll('input[name="basemap"]').forEach(r => {
   });
 });
 
-// ── Color palettes ──
+// ── Palettes ──
 const kkprlPalette = [
   "#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00",
   "#a65628","#f781bf","#1b9e77","#d95f02","#7570b3",
   "#e6ab02","#66a61e","#e7298a","#a6761d","#888888"
 ];
-// Warm yellows/greens for akresi to distinguish from KKPRL
 const akresiPalette = [
   "#f5c842","#e8a020","#c47a00","#8db84a","#5a9e3a",
   "#2e7d32","#a5d63f","#f0e040","#d4a017","#6abf69"
 ];
+let ki = 0, ai = 0;
+const kkprlCM = {}, akresiCM = {};
+const getKC = k => { if (!kkprlCM[k])  { kkprlCM[k]  = kkprlPalette[ki++ % kkprlPalette.length]; } return kkprlCM[k]; };
+const getAC = k => { if (!akresiCM[k]) { akresiCM[k] = akresiPalette[ai++ % akresiPalette.length]; } return akresiCM[k]; };
 
-let kkprlColorIdx = 0, akresiColorIdx = 0;
-const kkprlColorMap = {}, akresiColorMap = {};
-
-function getKKPRLColor(key) {
-  if (!kkprlColorMap[key]) { kkprlColorMap[key] = kkprlPalette[kkprlColorIdx % kkprlPalette.length]; kkprlColorIdx++; }
-  return kkprlColorMap[key];
-}
-function getAkresiColor(key) {
-  if (!akresiColorMap[key]) { akresiColorMap[key] = akresiPalette[akresiColorIdx % akresiPalette.length]; akresiColorIdx++; }
-  return akresiColorMap[key];
-}
-
-// ── Popup builder ──
-const SKIP_KEYS = ["FID","OBJECTID","FCODE","NAMOBJ","SRS_ID","path","layer","LAMPIRAN","KBLI","REMARK"];
-function buildPopup(feature, fallbackTitle, isAkresi) {
+// ── Popup ──
+const SKIP = ["FID","OBJECTID","FCODE","NAMOBJ","SRS_ID","path","layer","LAMPIRAN","KBLI","REMARK"];
+function buildPopup(feature, fallback, isAkresi) {
   const p = feature.properties;
-  const title = p.NAMA_SUBJ || p.Kabupaten_ || p.NAMA || fallbackTitle;
-  const meta = isAkresi
+  const title = p.NAMA_SUBJ || p.Kabupaten_ || p.NAMA || fallback;
+  const meta  = isAkresi
     ? [p.Kecamatan, p.Provinsi].filter(Boolean).join(" · ")
     : [p.JENIS, p.KATEGORI].filter(Boolean).join(" · ");
   const showKeys = Object.keys(p).filter(k =>
-    !SKIP_KEYS.includes(k) && p[k] !== null && String(p[k]).trim() !== "" && p[k] !== "null"
+    !SKIP.includes(k) && p[k] !== null && String(p[k]).trim() !== "" && p[k] !== "null"
   );
-  const hdrClass = isAkresi ? "popup-header akresi" : "popup-header";
-  const metaClass = isAkresi ? "popup-meta akresi" : "popup-meta";
-  let html = `<div class="${hdrClass}">${title}<div class="${metaClass}">${meta}</div></div><div class="popup-body">`;
+  const hc = isAkresi ? "popup-header akresi" : "popup-header";
+  const mc = isAkresi ? "popup-meta akresi"   : "popup-meta";
+  let html = `<div class="${hc}">${title}<div class="${mc}">${meta}</div></div><div class="popup-body">`;
   showKeys.forEach(k => {
     html += `<div class="popup-row"><div class="popup-key">${k.replace(/_/g," ")}</div><div class="popup-val">${p[k]}</div></div>`;
   });
@@ -342,23 +318,21 @@ function buildPopup(feature, fallbackTitle, isAkresi) {
 // ── Expand/collapse ──
 function toggleExpand(e, listId, btnId) {
   e.preventDefault(); e.stopPropagation();
-  const list = document.getElementById(listId);
-  const btn  = document.getElementById(btnId);
-  const open = list.classList.toggle("open");
-  btn.textContent = open ? "▾ Detail" : "▸ Detail";
+  const open = document.getElementById(listId).classList.toggle("open");
+  document.getElementById(btnId).textContent = open ? "▾ Detail" : "▸ Detail";
 }
 
-// ── Sync master checkbox state ──
+// ── Sync master ──
 function syncMaster(subListId, masterId) {
   const all = document.querySelectorAll(`#${subListId} input[type=checkbox]`);
   const on  = document.querySelectorAll(`#${subListId} input[type=checkbox]:checked`);
-  const master = document.getElementById(masterId);
-  master.indeterminate = on.length > 0 && on.length < all.length;
-  if (!master.indeterminate) master.checked = on.length === all.length;
+  const m   = document.getElementById(masterId);
+  m.indeterminate = on.length > 0 && on.length < all.length;
+  if (!m.indeterminate) m.checked = on.length === all.length;
 }
 
-// ── Generic function to build a grouped layer section ──
-function buildGroupedSection({ data, groupField, getColor, subListId, masterId, isAkresi, onLayerBuilt }) {
+// ── Build grouped layer section ──
+function buildGroupedSection({ data, groupField, getColor, subListId, masterId, isAkresi, onDone }) {
   const grouped = {};
   data.features.forEach(f => {
     const key = (f.properties[groupField] || "Unknown").trim();
@@ -369,16 +343,19 @@ function buildGroupedSection({ data, groupField, getColor, subListId, masterId, 
   const subListEl = document.getElementById(subListId);
   const allLayers = [];
   const layerMap  = {};
+  const colorState = {}; // tracks current color per key
 
   Object.keys(grouped).sort().forEach(key => {
-    const color    = getColor(key);
+    let color = getColor(key);
+    colorState[key] = color;
     const features = grouped[key];
 
+    // Build GeoJSON layer
     const lyr = L.geoJSON({ type: "FeatureCollection", features }, {
       style: () => ({
-        color: isAkresi ? "#8a6d00" : color,
+        color: isAkresi ? darken(colorState[key]) : colorState[key],
         weight: isAkresi ? 1.5 : 2,
-        fillColor: color,
+        fillColor: colorState[key],
         fillOpacity: 0.55
       }),
       onEachFeature: (feature, layer) => {
@@ -391,29 +368,70 @@ function buildGroupedSection({ data, groupField, getColor, subListId, masterId, 
     layerMap[key] = lyr;
     allLayers.push(lyr);
 
-    const row = document.createElement("label");
+    // ── Sidebar row ──
+    const row = document.createElement("div");
     row.className = "sub-item";
-    row.innerHTML = `
-      <input type="checkbox" checked data-key="${key}">
-      <span class="sub-swatch" style="background:${color};border:1px solid rgba(0,0,0,0.15);"></span>
-      <span class="sub-name">${key} <span class="sub-count">(${features.length})</span></span>
-    `;
-    subListEl.appendChild(row);
 
-    row.querySelector("input").addEventListener("change", e => {
+    // Checkbox
+    const chk = document.createElement("input");
+    chk.type = "checkbox";
+    chk.checked = true;
+    chk.addEventListener("change", e => {
       e.target.checked ? map.addLayer(lyr) : map.removeLayer(lyr);
       syncMaster(subListId, masterId);
     });
+
+    // Color swatch button (wraps a hidden <input type=color>)
+    const swatchBtn = document.createElement("div");
+    swatchBtn.className = "color-swatch-btn";
+    swatchBtn.style.background = color;
+    swatchBtn.title = "Klik untuk ganti warna";
+
+    const picker = document.createElement("input");
+    picker.type  = "color";
+    picker.value = color;
+    picker.addEventListener("input", e => {
+      const newColor = e.target.value;
+      colorState[key] = newColor;
+      swatchBtn.style.background = newColor;
+      // Restyle all features in this layer
+      lyr.setStyle({
+        color: isAkresi ? darken(newColor) : newColor,
+        fillColor: newColor
+      });
+    });
+    swatchBtn.appendChild(picker);
+
+    // Label
+    const label = document.createElement("span");
+    label.className = "sub-name";
+    label.innerHTML = `${key} <span class="sub-count">(${features.length})</span>`;
+
+    row.appendChild(chk);
+    row.appendChild(swatchBtn);
+    row.appendChild(label);
+    subListEl.appendChild(row);
   });
 
   // Master toggle
   document.getElementById(masterId).addEventListener("change", e => {
     const on = e.target.checked;
     Object.values(layerMap).forEach(l => on ? map.addLayer(l) : map.removeLayer(l));
-    document.querySelectorAll(`#${subListId} input`).forEach(cb => cb.checked = on);
+    document.querySelectorAll(`#${subListId} input[type=checkbox]`).forEach(cb => cb.checked = on);
   });
 
-  onLayerBuilt(allLayers, layerMap);
+  onDone(allLayers);
+}
+
+// Darken a hex color for stroke
+function darken(hex) {
+  let r = parseInt(hex.slice(1,3),16);
+  let g = parseInt(hex.slice(3,5),16);
+  let b = parseInt(hex.slice(5,7),16);
+  r = Math.max(0, Math.round(r * 0.6));
+  g = Math.max(0, Math.round(g * 0.6));
+  b = Math.max(0, Math.round(b * 0.6));
+  return "#" + [r,g,b].map(v => v.toString(16).padStart(2,"0")).join("");
 }
 
 // ── Load data ──
@@ -429,46 +447,32 @@ Promise.all([
   let allKKPRL = [], allAkresi = [];
 
   buildGroupedSection({
-    data: kkprlData,
-    groupField: "NAMA_SUBJ",
-    getColor: getKKPRLColor,
-    subListId: "kkprl-sub-list",
-    masterId: "chk-kkprl-all",
+    data: kkprlData, groupField: "NAMA_SUBJ",
+    getColor: getKC, subListId: "kkprl-sub-list", masterId: "chk-kkprl-all",
     isAkresi: false,
-    onLayerBuilt: (layers) => {
-      allKKPRL = layers;
-      tryFitBounds();
-    }
+    onDone: layers => { allKKPRL = layers; tryFit(); }
   });
 
   buildGroupedSection({
-    data: akresiData,
-    groupField: "Kabupaten_",
-    getColor: getAkresiColor,
-    subListId: "akresi-sub-list",
-    masterId: "chk-akresi-all",
+    data: akresiData, groupField: "Kabupaten_",
+    getColor: getAC, subListId: "akresi-sub-list", masterId: "chk-akresi-all",
     isAkresi: true,
-    onLayerBuilt: (layers) => {
-      allAkresi = layers;
-      tryFitBounds();
-    }
+    onDone: layers => { allAkresi = layers; tryFit(); }
   });
 
-  function tryFitBounds() {
-    if (allKKPRL.length && allAkresi.length) {
-      map.fitBounds(L.featureGroup([...allKKPRL, ...allAkresi]).getBounds());
+  function tryFit() {
+    if (!allKKPRL.length || !allAkresi.length) return;
+    map.fitBounds(L.featureGroup([...allKKPRL, ...allAkresi]).getBounds());
 
-      // Search on invisible index layer
-      const searchLayer = L.geoJSON(kkprlData, {
-        style: () => ({ opacity: 0, fillOpacity: 0 })
-      }).addTo(map);
-      const sc = new L.Control.Search({
-        layer: searchLayer, propertyName: "NAMA_SUBJ",
-        zoom: 14, marker: false, textPlaceholder: "Cari nama subjek KKPRL..."
-      });
-      sc.on("search:locationfound", e => { if (e.layer._popup) e.layer.openPopup(); });
-      map.addControl(sc);
-    }
+    const searchLayer = L.geoJSON(kkprlData, {
+      style: () => ({ opacity: 0, fillOpacity: 0 })
+    }).addTo(map);
+    const sc = new L.Control.Search({
+      layer: searchLayer, propertyName: "NAMA_SUBJ",
+      zoom: 14, marker: false, textPlaceholder: "Cari nama subjek KKPRL..."
+    });
+    sc.on("search:locationfound", e => { if (e.layer._popup) e.layer.openPopup(); });
+    map.addControl(sc);
   }
 })
 .catch(err => {
