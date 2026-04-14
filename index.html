@@ -468,8 +468,8 @@ function buildGroupedSection({ data, groupField, getColor, subListId, masterId, 
 
 // ── Load data ──
 Promise.all([
-  fetch("data/kkprl_jawa.geojson").then(r => r.json()),
-  fetch("data/Akresi_Joined_Fix.geojson").then(r => r.json())
+  fetch("https://raw.githubusercontent.com/maghfirohnovia5-web/KKPRL_Existing/main/Lamun.geojson").then(r => r.json()),
+  fetch("https://raw.githubusercontent.com/maghfirohnovia5-web/KKPRL_Existing/main/Lamun.geojson").then(r => r.json())
 ])
 .then(([kkprlData, akresiData]) => {
   document.getElementById("loading-overlay").style.display = "none";
