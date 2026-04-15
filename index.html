@@ -5,87 +5,162 @@
   <title>WebGIS KKPRL – LPRL Serang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet-search@3.0.4/dist/leaflet-search.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-search@3.0.4/dist/leaflet-search.min.css" />
   <script src="https://unpkg.com/leaflet-search@3.0.4/dist/leaflet-search.min.js"></script>
 
   <style>
+    :root {
+      --navy: #0d3b6e;
+      --blue: #1a6ea8;
+      --bg: #f5f7fa;
+      --line: #dce3ec;
+      --text: #2c3e50;
+      --muted: #7a93ad;
+      --soft: #e4eaf2;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    html, body { height: 100%; }
+    body {
+      font-family: "Segoe UI", sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      color: var(--text);
+      background: #fff;
+    }
 
     /* HEADER */
     #header {
-      background: #0d3b6e; color: white;
-      padding: 0 18px; height: 56px;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-shrink: 0; z-index: 1000;
+      background: var(--navy);
+      color: white;
+      padding: 0 18px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      z-index: 1000;
       box-shadow: 0 2px 10px rgba(0,0,0,0.35);
     }
     .logo { display: flex; align-items: center; gap: 12px; }
     .logo-icon {
-      width: 36px; height: 36px; background: #1a6ea8;
+      width: 36px; height: 36px; background: var(--blue);
       border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px;
+      flex-shrink: 0;
     }
-    .logo-text h1 { font-size: 14px; font-weight: 700; }
+    .logo-text h1 { font-size: 14px; font-weight: 700; line-height: 1.2; }
     .logo-text .sub { font-size: 11px; color: #8ab4d4; margin-top: 1px; }
     .header-badge {
-      background: #1a6ea8; border-radius: 20px;
-      padding: 4px 12px; font-size: 11px; color: #c8dff0;
+      background: var(--blue);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 11px;
+      color: #c8dff0;
+      white-space: nowrap;
     }
 
     #main { display: flex; flex: 1; overflow: hidden; }
 
     /* SIDEBAR */
     #sidebar {
-      width: 300px; background: #f5f7fa;
-      border-right: 1px solid #dce3ec;
-      display: flex; flex-direction: column;
-      flex-shrink: 0; overflow-y: auto; z-index: 500;
+      width: 300px;
+      background: var(--bg);
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow-y: auto;
+      z-index: 500;
     }
-    .s-section { padding: 14px 16px; border-bottom: 1px solid #dce3ec; }
+    .s-section { padding: 14px 16px; border-bottom: 1px solid var(--line); }
     .s-title {
-      font-size: 10px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.9px;
-      color: #7a93ad; margin-bottom: 10px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      color: var(--muted);
+      margin-bottom: 10px;
     }
 
     /* Stats */
     .stat-row { display: flex; gap: 8px; }
     .stat-card {
-      flex: 1; background: white; border: 1px solid #dce3ec;
-      border-radius: 8px; padding: 10px; text-align: center;
+      flex: 1;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
     }
-    .stat-value { font-size: 22px; font-weight: 700; color: #0d3b6e; }
-    .stat-label { font-size: 10px; color: #7a93ad; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+    .stat-value { font-size: 22px; font-weight: 700; color: var(--navy); }
+    .stat-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
 
     /* Basemap */
     .basemap-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 7px 10px; border-radius: 8px;
-      cursor: pointer; transition: background 0.15s; margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-bottom: 4px;
     }
-    .basemap-item:hover { background: #e4eaf2; }
-    .basemap-item input[type=radio] { accent-color: #0d3b6e; cursor: pointer; }
-    .basemap-name { font-size: 13px; color: #2c3e50; }
+    .basemap-item:hover { background: var(--soft); }
+    .basemap-item input[type=radio] { accent-color: var(--navy); cursor: pointer; }
+    .basemap-name { font-size: 13px; color: var(--text); }
 
     /* Master toggles */
     .master-toggle {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 8px 10px; border-radius: 8px; margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      gap: 8px;
     }
     .master-toggle.kkprl-color  { background: #e8f0f8; }
     .master-toggle.akresi-color { background: #fdf6e3; }
-    .master-left { display: flex; align-items: center; gap: 8px; cursor: pointer; flex: 1; }
-    .master-toggle input[type=checkbox] { width: 15px; height: 15px; accent-color: #0d3b6e; cursor: pointer; }
+    .master-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      flex: 1;
+      min-width: 0;
+    }
+    .master-toggle input[type=checkbox] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--navy);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
     .master-label { font-size: 13px; font-weight: 600; }
-    .master-label.kkprl-color  { color: #0d3b6e; }
+    .master-label.kkprl-color  { color: var(--navy); }
     .master-label.akresi-color { color: #7a5c00; }
     .expand-btn {
-      background: none; cursor: pointer; font-size: 11px;
-      padding: 3px 8px; border-radius: 6px; transition: background 0.15s; white-space: nowrap;
+      background: none;
+      cursor: pointer;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      transition: background 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
-    .expand-btn.kkprl-color  { border: 1px solid #b0c8e0; color: #1a6ea8; }
+    .expand-btn.kkprl-color  { border: 1px solid #b0c8e0; color: var(--blue); }
     .expand-btn.kkprl-color:hover  { background: #d0dff0; }
     .expand-btn.akresi-color { border: 1px solid #d4b86a; color: #7a5c00; }
     .expand-btn.akresi-color:hover { background: #f0e0a0; }
@@ -96,45 +171,76 @@
 
     /* Each sub item row */
     .sub-item {
-      display: flex; align-items: flex-start; gap: 6px;
-      padding: 6px 6px; border-radius: 6px;
-      transition: background 0.15s; margin-bottom: 2px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      padding: 6px 6px;
+      border-radius: 6px;
+      transition: background 0.15s;
+      margin-bottom: 2px;
     }
-    .sub-item:hover { background: #e4eaf2; }
+    .sub-item:hover { background: var(--soft); }
     .sub-item input[type=checkbox] {
-      width: 14px; height: 14px; accent-color: #0d3b6e;
-      cursor: pointer; flex-shrink: 0; margin-top: 2px;
+      width: 14px;
+      height: 14px;
+      accent-color: var(--navy);
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
     }
 
     /* Color picker swatch */
     .color-swatch-btn {
-      width: 16px; height: 16px; border-radius: 3px; margin-top: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      margin-top: 2px;
       border: 1.5px solid rgba(0,0,0,0.2);
-      cursor: pointer; flex-shrink: 0; position: relative; overflow: hidden;
+      cursor: pointer;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
       transition: transform 0.1s;
     }
     .color-swatch-btn:hover { transform: scale(1.18); border-color: rgba(0,0,0,0.45); }
     .color-swatch-btn input[type=color] {
-      position: absolute; top: 0; left: 0;
-      width: 200%; height: 200%;
-      opacity: 0; cursor: pointer; border: none; padding: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      opacity: 0;
+      cursor: pointer;
+      border: none;
+      padding: 0;
     }
 
     /* Name + action buttons block */
-    .sub-info { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 4px; }
-    .sub-name { font-size: 11.5px; color: #2c3e50; line-height: 1.4; }
+    .sub-info {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+      gap: 4px;
+    }
+    .sub-name { font-size: 11.5px; color: var(--text); line-height: 1.4; word-break: break-word; }
     .sub-count { color: #aab8c4; font-size: 10px; }
-
-    /* Action buttons row under the name */
     .sub-actions { display: flex; gap: 4px; flex-wrap: wrap; }
     .action-btn {
-      display: inline-flex; align-items: center; gap: 3px;
-      font-size: 10px; padding: 2px 7px; border-radius: 4px;
-      border: 1px solid; cursor: pointer; background: none;
-      transition: background 0.15s; white-space: nowrap; line-height: 1.4;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid;
+      cursor: pointer;
+      background: none;
+      transition: background 0.15s;
+      white-space: nowrap;
+      line-height: 1.4;
     }
-    /* Zoom button */
-    .btn-zoom { color: #1a6ea8; border-color: #b0c8e0; }
+    .btn-zoom { color: var(--blue); border-color: #b0c8e0; }
     .btn-zoom:hover { background: #ddeeff; }
 
     /* MAP */
@@ -142,55 +248,113 @@
 
     /* LOADING */
     #loading-overlay {
-      position: absolute; top: 56px; left: 300px; right: 0; bottom: 0;
+      position: absolute;
+      top: 56px;
+      left: 300px;
+      right: 0;
+      bottom: 0;
       background: rgba(245,247,250,0.92);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; z-index: 9999; gap: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      gap: 14px;
     }
     .spinner {
-      width: 40px; height: 40px;
-      border: 3px solid #dce3ec; border-top-color: #0d3b6e;
-      border-radius: 50%; animation: spin 0.8s linear infinite;
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--line);
+      border-top-color: var(--navy);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-text { font-size: 13px; color: #7a93ad; }
+    .loading-text { font-size: 13px; color: var(--muted); }
 
     /* POPUP */
     .custom-popup .leaflet-popup-content-wrapper {
-      border-radius: 10px; padding: 0;
+      border-radius: 10px;
+      padding: 0;
       box-shadow: 0 4px 20px rgba(0,0,0,0.18);
-      border: none; overflow: hidden; min-width: 240px;
+      border: none;
+      overflow: hidden;
+      min-width: 240px;
     }
     .custom-popup .leaflet-popup-content { margin: 0; width: auto !important; }
     .popup-header {
-      background: #0d3b6e; color: white;
-      padding: 10px 14px; font-size: 13px; font-weight: 600; line-height: 1.4;
+      background: var(--navy);
+      color: white;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.4;
     }
     .popup-header.akresi { background: #7a5c00; }
-    .popup-meta { font-size: 10px; font-weight: 400; color: #8ab4d4; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .popup-meta {
+      font-size: 10px;
+      font-weight: 400;
+      color: #8ab4d4;
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
     .popup-meta.akresi { color: #f0d080; }
     .popup-body { padding: 0; max-height: 280px; overflow-y: auto; }
     .popup-row { display: flex; border-bottom: 1px solid #f0f4f8; font-size: 12px; }
     .popup-row:last-child { border-bottom: none; }
     .popup-key {
-      background: #f7f9fb; color: #7a93ad; padding: 6px 10px; width: 38%;
-      font-weight: 600; font-size: 10.5px; text-transform: uppercase;
-      letter-spacing: 0.3px; word-break: break-word;
+      background: #f7f9fb;
+      color: var(--muted);
+      padding: 6px 10px;
+      width: 38%;
+      font-weight: 600;
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      word-break: break-word;
     }
-    .popup-val { padding: 6px 10px; color: #2c3e50; width: 62%; word-break: break-word; }
+    .popup-val {
+      padding: 6px 10px;
+      color: var(--text);
+      width: 62%;
+      word-break: break-word;
+    }
 
     .sidebar-footer { padding: 12px 16px; }
     .sidebar-footer p { font-size: 11px; color: #aab8c4; line-height: 1.7; }
 
     #sidebar-toggle {
-      display: none; position: absolute; top: 66px; left: 10px;
-      z-index: 1000; background: #0d3b6e; color: white;
-      border: none; border-radius: 6px; width: 34px; height: 34px; cursor: pointer; font-size: 16px;
+      display: none;
+      position: absolute;
+      top: 66px;
+      left: 10px;
+      z-index: 1000;
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      width: 34px;
+      height: 34px;
+      cursor: pointer;
+      font-size: 16px;
     }
+
     @media (max-width: 700px) {
       #sidebar { display: none; }
-      #sidebar.open { display: flex; position: absolute; top: 56px; left: 0; height: calc(100vh - 56px); z-index: 999; }
-      #sidebar-toggle { display: flex; align-items: center; justify-content: center; }
+      #sidebar.open {
+        display: flex;
+        position: absolute;
+        top: 56px;
+        left: 0;
+        height: calc(100vh - 56px);
+        z-index: 999;
+      }
+      #sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
       #loading-overlay { left: 0; }
     }
   </style>
@@ -212,7 +376,6 @@
 
 <div id="main">
   <div id="sidebar">
-
     <div class="s-section">
       <div class="s-title">Statistik Data</div>
       <div class="stat-row">
@@ -227,31 +390,7 @@
       </div>
     </div>
 
-    <div class="s-section">
-      <div class="s-title">Layer KKPRL</div>
-      <div class="master-toggle kkprl-color">
-        <label class="master-left">
-          <input type="checkbox" id="chk-kkprl-all" checked>
-          <span class="master-label kkprl-color">Tampilkan Semua KKPRL</span>
-        </label>
-        <button class="expand-btn kkprl-color" id="expand-kkprl"
-          onclick="toggleExpand(event,'kkprl-sub-list','expand-kkprl')">▸ Detail</button>
-      </div>
-      <div id="kkprl-sub-list" class="sub-list"></div>
-    </div>
-
-    <div class="s-section">
-      <div class="s-title">Layer Akresi</div>
-      <div class="master-toggle akresi-color">
-        <label class="master-left">
-          <input type="checkbox" id="chk-akresi-all" checked>
-          <span class="master-label akresi-color">Tampilkan Semua Akresi</span>
-        </label>
-        <button class="expand-btn akresi-color" id="expand-akresi"
-          onclick="toggleExpand(event,'akresi-sub-list','expand-akresi')">▸ Detail</button>
-      </div>
-      <div id="akresi-sub-list" class="sub-list"></div>
-    </div>
+    <div id="layer-sections"></div>
 
     <div class="s-section">
       <div class="s-title">Basemap</div>
@@ -279,241 +418,363 @@
 </div>
 
 <script>
-const map = L.map("map").setView([-6.9, 110.4], 9);
+  const map = L.map("map").setView([-6.9, 110.4], 9);
 
-const esriSat = L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-  { attribution: "© Esri" }
-).addTo(map);
-const osm = L.tileLayer(
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  { attribution: "© OpenStreetMap" }
-);
-document.querySelectorAll('input[name="basemap"]').forEach(r => {
-  r.addEventListener("change", () => {
-    if (r.value === "satelit") { map.removeLayer(osm); map.addLayer(esriSat); }
-    else { map.removeLayer(esriSat); map.addLayer(osm); }
-  });
-});
+  const esriSat = L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    { attribution: "© Esri" }
+  ).addTo(map);
 
-// ── Palettes ──
-const kkprlPalette = [
-  "#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00",
-  "#a65628","#f781bf","#1b9e77","#d95f02","#7570b3",
-  "#e6ab02","#66a61e","#e7298a","#a6761d","#888888"
-];
-const akresiPalette = [
-  "#f5c842","#e8a020","#c47a00","#8db84a","#5a9e3a",
-  "#2e7d32","#a5d63f","#f0e040","#d4a017","#6abf69"
-];
-let ki = 0, ai = 0;
-const kkprlCM = {}, akresiCM = {};
-const getKC = k => { if (!kkprlCM[k])  { kkprlCM[k]  = kkprlPalette[ki++ % kkprlPalette.length]; } return kkprlCM[k]; };
-const getAC = k => { if (!akresiCM[k]) { akresiCM[k] = akresiPalette[ai++ % akresiPalette.length]; } return akresiCM[k]; };
-
-// ── Popup ──
-const SKIP = ["FID","OBJECTID","FCODE","NAMOBJ","SRS_ID","path","layer","LAMPIRAN","KBLI","REMARK"];
-function buildPopup(feature, fallback, isAkresi) {
-  const p = feature.properties;
-  const title = p.NAMA_SUBJ || p.Kabupaten_ || p.NAMA || fallback;
-  const meta  = isAkresi
-    ? [p.Kecamatan, p.Provinsi].filter(Boolean).join(" · ")
-    : [p.JENIS, p.KATEGORI].filter(Boolean).join(" · ");
-  const showKeys = Object.keys(p).filter(k =>
-    !SKIP.includes(k) && p[k] !== null && String(p[k]).trim() !== "" && p[k] !== "null"
+  const osm = L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    { attribution: "© OpenStreetMap" }
   );
-  const hc = isAkresi ? "popup-header akresi" : "popup-header";
-  const mc = isAkresi ? "popup-meta akresi"   : "popup-meta";
-  let html = `<div class="${hc}">${title}<div class="${mc}">${meta}</div></div><div class="popup-body">`;
-  showKeys.forEach(k => {
-    html += `<div class="popup-row"><div class="popup-key">${k.replace(/_/g," ")}</div><div class="popup-val">${p[k]}</div></div>`;
-  });
-  return html + "</div>";
-}
 
-// ── Darken hex for stroke ──
-function darken(hex) {
-  let r = Math.max(0, Math.round(parseInt(hex.slice(1,3),16) * 0.6));
-  let g = Math.max(0, Math.round(parseInt(hex.slice(3,5),16) * 0.6));
-  let b = Math.max(0, Math.round(parseInt(hex.slice(5,7),16) * 0.6));
-  return "#" + [r,g,b].map(v => v.toString(16).padStart(2,"0")).join("");
-}
-
-// ── Expand/collapse ──
-function toggleExpand(e, listId, btnId) {
-  e.preventDefault(); e.stopPropagation();
-  const open = document.getElementById(listId).classList.toggle("open");
-  document.getElementById(btnId).textContent = open ? "▾ Detail" : "▸ Detail";
-}
-
-// ── Sync master checkbox ──
-function syncMaster(subListId, masterId) {
-  const all = document.querySelectorAll(`#${subListId} input[type=checkbox]`);
-  const on  = document.querySelectorAll(`#${subListId} input[type=checkbox]:checked`);
-  const m   = document.getElementById(masterId);
-  m.indeterminate = on.length > 0 && on.length < all.length;
-  if (!m.indeterminate) m.checked = on.length === all.length;
-}
-
-// ── Build grouped section ──
-function buildGroupedSection({ data, groupField, getColor, subListId, masterId, isAkresi, onDone }) {
-  const grouped = {};
-  data.features.forEach(f => {
-    const key = (f.properties[groupField] || "Unknown").trim();
-    if (!grouped[key]) grouped[key] = [];
-    grouped[key].push(f);
-  });
-
-  const subListEl = document.getElementById(subListId);
-  const allLayers = [];
-  const colorState = {};
-
-  Object.keys(grouped).sort().forEach(key => {
-    let color = getColor(key);
-    colorState[key] = color;
-    const features = grouped[key];
-
-    const lyr = L.geoJSON({ type: "FeatureCollection", features }, {
-      style: () => ({
-        color: isAkresi ? darken(colorState[key]) : colorState[key],
-        weight: isAkresi ? 1.5 : 2,
-        fillColor: colorState[key],
-        fillOpacity: 0.55
-      }),
-      onEachFeature: (feature, layer) => {
-        layer.bindPopup(buildPopup(feature, key, isAkresi), { className: "custom-popup", maxWidth: 340 });
-        layer.on("mouseover", function() { this.setStyle({ weight: 3, fillOpacity: 0.78 }); });
-        layer.on("mouseout",  function() { lyr.resetStyle(this); });
+  document.querySelectorAll('input[name="basemap"]').forEach(r => {
+    r.addEventListener("change", () => {
+      if (r.value === "satelit") {
+        map.removeLayer(osm);
+        map.addLayer(esriSat);
+      } else {
+        map.removeLayer(esriSat);
+        map.addLayer(osm);
       }
-    }).addTo(map);
-
-    allLayers.push(lyr);
-
-    // ── Build sidebar row ──
-    const row = document.createElement("div");
-    row.className = "sub-item";
-
-    // Checkbox
-    const chk = document.createElement("input");
-    chk.type = "checkbox";
-    chk.checked = true;
-    chk.addEventListener("change", e => {
-      e.target.checked ? map.addLayer(lyr) : map.removeLayer(lyr);
-      syncMaster(subListId, masterId);
     });
-
-    // Color swatch picker
-    const swatchBtn = document.createElement("div");
-    swatchBtn.className = "color-swatch-btn";
-    swatchBtn.style.background = color;
-    swatchBtn.title = "Klik untuk ganti warna";
-    const picker = document.createElement("input");
-    picker.type  = "color";
-    picker.value = color;
-    picker.addEventListener("input", e => {
-      const nc = e.target.value;
-      colorState[key] = nc;
-      swatchBtn.style.background = nc;
-      lyr.setStyle({ color: isAkresi ? darken(nc) : nc, fillColor: nc });
-    });
-    swatchBtn.appendChild(picker);
-
-    // Info block: name + action buttons
-    const info = document.createElement("div");
-    info.className = "sub-info";
-
-    const nameEl = document.createElement("div");
-    nameEl.className = "sub-name";
-    nameEl.innerHTML = `${key} <span class="sub-count">(${features.length})</span>`;
-
-    // Action buttons
-    const actions = document.createElement("div");
-    actions.className = "sub-actions";
-
-    // Zoom to button
-    const zoomBtn = document.createElement("button");
-    zoomBtn.className = "action-btn btn-zoom";
-    zoomBtn.innerHTML = "&#8982; Zoom ke zona";
-    zoomBtn.title = "Zoom ke semua fitur zona ini";
-    zoomBtn.addEventListener("click", e => {
-      e.stopPropagation();
-      // If layer is hidden, show it first
-      if (!map.hasLayer(lyr)) {
-        map.addLayer(lyr);
-        chk.checked = true;
-        syncMaster(subListId, masterId);
-      }
-      map.fitBounds(lyr.getBounds(), { padding: [40, 40] });
-    });
-
-    actions.appendChild(zoomBtn);
-    info.appendChild(nameEl);
-    info.appendChild(actions);
-
-    row.appendChild(chk);
-    row.appendChild(swatchBtn);
-    row.appendChild(info);
-    subListEl.appendChild(row);
   });
 
-  // Master toggle
-  document.getElementById(masterId).addEventListener("change", e => {
-    const on = e.target.checked;
-    allLayers.forEach(l => on ? map.addLayer(l) : map.removeLayer(l));
-    document.querySelectorAll(`#${subListId} input[type=checkbox]`).forEach(cb => cb.checked = on);
-  });
+  const baseUrl = "https://raw.githubusercontent.com/maghfirohnovia5-web/KKPRL_Existing/main/data/";
 
-  onDone(allLayers);
-}
+  const kkprlPalette = [
+    "#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00",
+    "#a65628", "#f781bf", "#1b9e77", "#d95f02", "#7570b3",
+    "#e6ab02", "#66a61e", "#e7298a", "#a6761d", "#888888"
+  ];
+  const akresiPalette = [
+    "#f5c842", "#e8a020", "#c47a00", "#8db84a", "#5a9e3a",
+    "#2e7d32", "#a5d63f", "#f0e040", "#d4a017", "#6abf69"
+  ];
 
-// ── Load data ──
-Promise.all([
-  fetch("https://raw.githubusercontent.com/maghfirohnovia5-web/KKPRL_Existing/main/Lamun.geojson").then(r => r.json()),
-  fetch("https://raw.githubusercontent.com/maghfirohnovia5-web/KKPRL_Existing/main/Lamun.geojson").then(r => r.json())
-])
-.then(([kkprlData, akresiData]) => {
-  document.getElementById("loading-overlay").style.display = "none";
-  document.getElementById("stat-kkprl").textContent  = kkprlData.features.length;
-  document.getElementById("stat-akresi").textContent = akresiData.features.length;
+  const SKIP = ["FID", "OBJECTID", "FCODE", "NAMOBJ", "SRS_ID", "path", "layer", "LAMPIRAN", "KBLI", "REMARK"];
 
-  let allKKPRL = [], allAkresi = [];
+  const layerConfigs = [
+    {
+      key: "kkprl",
+      title: "Layer KKPRL",
+      file: "kkprl_jawa.geojson",
+      groupFields: ["NAMA_SUBJ", "label", "name"],
+      isAkresi: false,
+      palette: kkprlPalette,
+      masterId: "chk-kkprl-all",
+      subListId: "kkprl-sub-list",
+      statId: "stat-kkprl",
+      searchField: "NAMA_SUBJ",
+      searchPlaceholder: "Cari nama subjek KKPRL..."
+    },
+    {
+      key: "akresi",
+      title: "Layer Akresi",
+      file: "Akresi_Joined_Fix.geojson",
+      groupFields: ["Kabupaten_", "label", "name"],
+      isAkresi: true,
+      palette: akresiPalette,
+      masterId: "chk-akresi-all",
+      subListId: "akresi-sub-list",
+      statId: "stat-akresi"
+    },
+    {
+      key: "lamun",
+      title: "Layer Lamun",
+      file: "Lamun.geojson",
+      groupFields: ["label", "NAMA_SUBJ", "name"],
+      isAkresi: false,
+      palette: kkprlPalette,
+      masterId: "chk-lamun-all",
+      subListId: "lamun-sub-list",
+      statId: "stat-lamun"
+    },
+    {
+      key: "coral",
+      title: "Coral Jawa Tengah",
+      file: "Coral Jawa Tengah.geojson",
+      groupFields: ["label", "NAMA_SUBJ", "name"],
+      isAkresi: false,
+      palette: kkprlPalette,
+      masterId: "chk-coral-all",
+      subListId: "coral-sub-list",
+      statId: "stat-coral"
+    },
+    {
+      key: "mangrove",
+      title: "Mangrove Jawa Tengah",
+      file: "Mangrove Jawa Tengah.geojson",
+      groupFields: ["label", "NAMA_SUBJ", "name"],
+      isAkresi: false,
+      palette: kkprlPalette,
+      masterId: "chk-mangrove-all",
+      subListId: "mangrove-sub-list",
+      statId: "stat-mangrove"
+    }
+  ];
 
-  buildGroupedSection({
-    data: kkprlData, groupField: "NAMA_SUBJ",
-    getColor: getKC, subListId: "kkprl-sub-list", masterId: "chk-kkprl-all",
-    isAkresi: false,
-    onDone: layers => { allKKPRL = layers; tryFit(); }
-  });
-
-  buildGroupedSection({
-    data: akresiData, groupField: "Kabupaten_",
-    getColor: getAC, subListId: "akresi-sub-list", masterId: "chk-akresi-all",
-    isAkresi: true,
-    onDone: layers => { allAkresi = layers; tryFit(); }
-  });
-
-  function tryFit() {
-    if (!allKKPRL.length || !allAkresi.length) return;
-    map.fitBounds(L.featureGroup([...allKKPRL, ...allAkresi]).getBounds());
-
-    const searchLayer = L.geoJSON(kkprlData, {
-      style: () => ({ opacity: 0, fillOpacity: 0 })
-    }).addTo(map);
-    const sc = new L.Control.Search({
-      layer: searchLayer, propertyName: "NAMA_SUBJ",
-      zoom: 14, marker: false, textPlaceholder: "Cari nama subjek KKPRL..."
-    });
-    sc.on("search:locationfound", e => { if (e.layer._popup) e.layer.openPopup(); });
-    map.addControl(sc);
+  function darken(hex) {
+    const r = Math.max(0, Math.round(parseInt(hex.slice(1, 3), 16) * 0.6));
+    const g = Math.max(0, Math.round(parseInt(hex.slice(3, 5), 16) * 0.6));
+    const b = Math.max(0, Math.round(parseInt(hex.slice(5, 7), 16) * 0.6));
+    return "#" + [r, g, b].map(v => v.toString(16).padStart(2, "0")).join("");
   }
-})
-.catch(err => {
-  document.getElementById("loading-overlay").innerHTML =
-    `<div style="color:#c0392b;font-size:13px;text-align:center;padding:20px;">
-      ❌ Gagal memuat data.<br>Periksa path file GeoJSON.<br>
-      <small style="color:#aaa;">${err.message}</small>
-    </div>`;
-});
+
+  function getFirstValue(obj, keys) {
+    for (const key of keys) {
+      const value = obj && obj[key];
+      if (value !== null && value !== undefined && String(value).trim() !== "" && value !== "null") {
+        return value;
+      }
+    }
+    return null;
+  }
+
+  function buildPopup(feature, fallback, isAkresi, groupFields = []) {
+    const p = feature.properties || {};
+    const title = getFirstValue(p, ["NAMA_SUBJ", "Kabupaten_", "label", "name", "NAMA"]) || fallback || "Unknown";
+    const meta = isAkresi
+      ? [p.Kecamatan, p.Provinsi].filter(Boolean).join(" · ")
+      : [p.JENIS, p.KATEGORI].filter(Boolean).join(" · ");
+
+    const showKeys = Object.keys(p).filter(k =>
+      !SKIP.includes(k) && p[k] !== null && String(p[k]).trim() !== "" && p[k] !== "null"
+    );
+
+    const hc = isAkresi ? "popup-header akresi" : "popup-header";
+    const mc = isAkresi ? "popup-meta akresi" : "popup-meta";
+
+    let html = `<div class="${hc}">${title}<div class="${mc}">${meta}</div></div><div class="popup-body">`;
+    showKeys.forEach(k => {
+      html += `<div class="popup-row"><div class="popup-key">${k.replace(/_/g, " ")}</div><div class="popup-val">${p[k]}</div></div>`;
+    });
+    return html + "</div>";
+  }
+
+  function toggleExpand(e, listId, btnId) {
+    e.preventDefault();
+    e.stopPropagation();
+    const open = document.getElementById(listId).classList.toggle("open");
+    document.getElementById(btnId).textContent = open ? "▾ Detail" : "▸ Detail";
+  }
+
+  function syncMaster(subListId, masterId) {
+    const all = document.querySelectorAll(`#${subListId} input[type=checkbox]`);
+    const on = document.querySelectorAll(`#${subListId} input[type=checkbox]:checked`);
+    const m = document.getElementById(masterId);
+    if (!m) return;
+    m.indeterminate = on.length > 0 && on.length < all.length;
+    if (!m.indeterminate) m.checked = on.length === all.length;
+  }
+
+  function createLayerSection(cfg) {
+    const section = document.createElement("div");
+    section.className = "s-section";
+    section.innerHTML = `
+      <div class="s-title">${cfg.title}</div>
+      <div class="master-toggle ${cfg.isAkresi ? "akresi-color" : "kkprl-color"}">
+        <label class="master-left">
+          <input type="checkbox" id="${cfg.masterId}" checked>
+          <span class="master-label ${cfg.isAkresi ? "akresi-color" : "kkprl-color"}">Tampilkan Semua</span>
+        </label>
+        <button class="expand-btn ${cfg.isAkresi ? "akresi-color" : "kkprl-color"}" id="expand-${cfg.key}">▸ Detail</button>
+      </div>
+      <div id="${cfg.subListId}" class="sub-list"></div>
+    `;
+
+    section.querySelector(`#expand-${cfg.key}`).addEventListener("click", e => {
+      toggleExpand(e, cfg.subListId, `expand-${cfg.key}`);
+    });
+
+    return section;
+  }
+
+  function buildGroupedSection(cfg, data) {
+    const groupFields = cfg.groupFields || [cfg.groupField || "label"];
+    const grouped = {};
+    const palette = cfg.palette;
+    let colorIndex = 0;
+    const colorMap = {};
+
+    const getColor = key => {
+      if (!colorMap[key]) colorMap[key] = palette[colorIndex++ % palette.length];
+      return colorMap[key];
+    };
+
+    (data.features || []).forEach(f => {
+            const raw = getFirstValue(f?.properties, groupFields);
+      const key = String(raw || "Unknown").trim() || "Unknown";
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(f);
+    });
+
+    const subListEl = document.getElementById(cfg.subListId);
+    const allLayers = [];
+
+    Object.keys(grouped).sort().forEach(key => {
+      const color = getColor(key);
+      const features = grouped[key];
+
+      const lyr = L.geoJSON({ type: "FeatureCollection", features }, {
+        style: () => ({
+          color: cfg.isAkresi ? darken(color) : color,
+          weight: cfg.isAkresi ? 1.5 : 2,
+          fillColor: color,
+          fillOpacity: 0.55
+        }),
+        onEachFeature: (feature, layer) => {
+          layer.bindPopup(buildPopup(feature, key, cfg.isAkresi, groupFields), {
+            className: "custom-popup",
+            maxWidth: 340
+          });
+          layer.on("mouseover", function() { this.setStyle({ weight: 3, fillOpacity: 0.78 }); });
+          layer.on("mouseout", function() { lyr.resetStyle(this); });
+        }
+      }).addTo(map);
+
+      allLayers.push(lyr);
+
+      const row = document.createElement("div");
+      row.className = "sub-item";
+
+      const chk = document.createElement("input");
+      chk.type = "checkbox";
+      chk.checked = true;
+      chk.addEventListener("change", e => {
+        e.target.checked ? map.addLayer(lyr) : map.removeLayer(lyr);
+        syncMaster(cfg.subListId, cfg.masterId);
+      });
+
+      const swatchBtn = document.createElement("div");
+      swatchBtn.className = "color-swatch-btn";
+      swatchBtn.style.background = color;
+      swatchBtn.title = "Klik untuk ganti warna";
+
+      const picker = document.createElement("input");
+      picker.type = "color";
+      picker.value = color;
+      picker.addEventListener("input", e => {
+        const nc = e.target.value;
+        swatchBtn.style.background = nc;
+        lyr.setStyle({
+          color: cfg.isAkresi ? darken(nc) : nc,
+          fillColor: nc
+        });
+      });
+      swatchBtn.appendChild(picker);
+
+      const info = document.createElement("div");
+      info.className = "sub-info";
+
+      const nameEl = document.createElement("div");
+      nameEl.className = "sub-name";
+      nameEl.innerHTML = `${key} <span class="sub-count">(${features.length})</span>`;
+
+      const actions = document.createElement("div");
+      actions.className = "sub-actions";
+
+      const zoomBtn = document.createElement("button");
+      zoomBtn.className = "action-btn btn-zoom";
+      zoomBtn.innerHTML = "&#8982; Zoom ke zona";
+      zoomBtn.title = "Zoom ke semua fitur zona ini";
+      zoomBtn.addEventListener("click", e => {
+        e.stopPropagation();
+        if (!map.hasLayer(lyr)) {
+          map.addLayer(lyr);
+          chk.checked = true;
+          syncMaster(cfg.subListId, cfg.masterId);
+        }
+        map.fitBounds(lyr.getBounds(), { padding: [40, 40] });
+      });
+
+      actions.appendChild(zoomBtn);
+      info.appendChild(nameEl);
+      info.appendChild(actions);
+
+      row.appendChild(chk);
+      row.appendChild(swatchBtn);
+      row.appendChild(info);
+      subListEl.appendChild(row);
+    });
+
+    const master = document.getElementById(cfg.masterId);
+    master.addEventListener("change", e => {
+      const on = e.target.checked;
+      allLayers.forEach(l => on ? map.addLayer(l) : map.removeLayer(l));
+      document.querySelectorAll(`#${cfg.subListId} input[type=checkbox]`).forEach(cb => cb.checked = on);
+    });
+
+    return allLayers;
+  }
+
+  // Create all sidebar sections before loading data
+  const layerSectionsHost = document.getElementById("layer-sections");
+  layerConfigs.forEach(cfg => {
+    layerSectionsHost.appendChild(createLayerSection(cfg));
+  });
+
+  // Load all GeoJSON files
+  Promise.all(layerConfigs.map(async cfg => {
+    const url = encodeURI(baseUrl + cfg.file);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Gagal memuat ${cfg.file}`);
+    const data = await res.json();
+    return { cfg, data };
+  }))
+  .then(results => {
+    document.getElementById("loading-overlay").style.display = "none";
+
+    const allLayers = [];
+    const dataByKey = {};
+
+    results.forEach(({ cfg, data }) => {
+      dataByKey[cfg.key] = data;
+
+      const featCount = Array.isArray(data.features) ? data.features.length : 0;
+      const statEl = document.getElementById(cfg.statId);
+      if (statEl) statEl.textContent = featCount;
+
+      const layers = buildGroupedSection(cfg, data);
+      allLayers.push(...layers);
+    });
+
+    if (allLayers.length) {
+      map.fitBounds(L.featureGroup(allLayers).getBounds());
+    }
+
+    // Search on KKPRL only
+    const kkprlData = dataByKey.kkprl;
+    if (kkprlData) {
+      const searchLayer = L.geoJSON(kkprlData, {
+        style: () => ({ opacity: 0, fillOpacity: 0 })
+      }).addTo(map);
+
+      const sc = new L.Control.Search({
+        layer: searchLayer,
+        propertyName: "NAMA_SUBJ",
+        zoom: 14,
+        marker: false,
+        textPlaceholder: "Cari nama subjek KKPRL..."
+      });
+
+      sc.on("search:locationfound", e => {
+        if (e.layer && e.layer._popup) e.layer.openPopup();
+      });
+
+      map.addControl(sc);
+    }
+  })
+  .catch(err => {
+    document.getElementById("loading-overlay").innerHTML = `
+      <div style="color:#c0392b;font-size:13px;text-align:center;padding:20px;">
+        ❌ Gagal memuat data.<br>Periksa path file GeoJSON.<br>
+        <small style="color:#aaa;">${err.message}</small>
+      </div>
+    `;
+  });
 </script>
 </body>
 </html>
